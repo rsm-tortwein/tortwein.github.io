@@ -18,9 +18,7 @@
 #
 #
 #
-#
-#
-#| echo: false
+#| collapse: true
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -107,56 +105,38 @@ df.head()
 #
 #
 #
-#
-#
-#| echo: false
-# Calculate summary statistics for key variables by treatment group
-summary_stats = df.groupby("treatment")[["gave", "amount", "mrm2", "freq", "years", "female", "couple"]].mean()
-print("Summary Statistics by Treatment Group:")
-print(summary_stats)
+#| collapse: true
 
-# T-test for months since last donation (mrm2)
-control_mrm2 = df[df["treatment"] == 0]["mrm2"]
-treat_mrm2 = df[df["treatment"] == 1]["mrm2"]
-t_stat_mrm2, p_val_mrm2 = stats.ttest_ind(control_mrm2, treat_mrm2)
-print("\nT-test for months since last donation (mrm2):")
-print(f"t-statistic: {t_stat_mrm2:.4f}")
-print(f"p-value: {p_val_mrm2:.4f}")
+# Function to perform both t-test and linear regression
+def compare_groups(df, var_name):
+    # Prepare data
+    control = df[df['treatment'] == 0][var_name].dropna()
+    treat = df[df['treatment'] == 1][var_name].dropna()
+    
+    # T-test
+    t_stat = (treat.mean() - control.mean()) / np.sqrt(
+        (treat.var() / len(treat)) + (control.var() / len(control))
+    )
+    p_val = 2 * (1 - stats.t.cdf(abs(t_stat), df=len(treat) + len(control) - 2))
+    
+    # Linear regression
+    model = smf.ols(f"{var_name} ~ treatment", data=df).fit()
+    
+    print(f"\nResults for {var_name}:")
+    print("-" * 50)
+    print(f"Treatment mean: {treat.mean():.3f}")
+    print(f"Control mean: {control.mean():.3f}")
+    print(f"\nT-test results:")
+    print(f"t-statistic: {t_stat:.3f}")
+    print(f"p-value: {p_val:.3f}")
+    print(f"\nRegression results:")
+    print(model.summary().tables[1])
+    print("\n")
 
-# Linear regression: mrm2 ~ treatment
-model_mrm2 = smf.ols("mrm2 ~ treatment", data=df).fit()
-print("\nLinear regression for months since last donation:")
-print(model_mrm2.summary().tables[1])  # Only show the coefficients table
-
-# T-test for frequency of prior donations
-control_freq = df[df["treatment"] == 0]["freq"]
-treat_freq = df[df["treatment"] == 1]["freq"]
-t_stat_freq, p_val_freq = stats.ttest_ind(control_freq, treat_freq)
-print("\nT-test for frequency of prior donations:")
-print(f"t-statistic: {t_stat_freq:.4f}")
-print(f"p-value: {p_val_freq:.4f}")
-
-# Linear regression: freq ~ treatment
-model_freq = smf.ols("freq ~ treatment", data=df).fit()
-print("\nLinear regression for frequency of prior donations:")
-print(model_freq.summary().tables[1])  # Only show the coefficients table
-
-# Additional balance tests for key demographic variables
-# T-test for female
-control_female = df[df["treatment"] == 0]["female"]
-treat_female = df[df["treatment"] == 1]["female"]
-t_stat_female, p_val_female = stats.ttest_ind(control_female, treat_female)
-print("\nT-test for female:")
-print(f"t-statistic: {t_stat_female:.4f}")
-print(f"p-value: {p_val_female:.4f}")
-
-# T-test for couple
-control_couple = df[df["treatment"] == 0]["couple"]
-treat_couple = df[df["treatment"] == 1]["couple"]
-t_stat_couple, p_val_couple = stats.ttest_ind(control_couple, treat_couple)
-print("\nT-test for couple:")
-print(f"t-statistic: {t_stat_couple:.4f}")
-print(f"p-value: {p_val_couple:.4f}")
+# Test variables
+variables = ['mrm2', 'female', 'couple', 'freq']
+for var in variables:
+    compare_groups(df, var)
 #
 #
 #
@@ -170,7 +150,19 @@ print(f"p-value: {p_val_couple:.4f}")
 #
 #
 #
-#| echo: false
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#| collapse: true
 # Calculate proportion of people who donated in each group
 donation_rates = df.groupby("treatment")["gave"].mean()
 donation_rates.index = ["Control", "Treatment"]
@@ -223,7 +215,7 @@ print(mfx.summary().tables[0])  # Only show the marginal effects table
 #
 #
 #
-#| echo: false
+#| collapse: true
 # Filter to only treatment group
 treat_df = df[df["treatment"] == 1].copy()
 
@@ -288,28 +280,6 @@ for i, v in enumerate(ratio_data['Donation Rate']):
 
 plt.tight_layout()
 plt.show()
-
-# Additional analysis: Test for differences in donation amounts by match ratio
-# Filter to only people who gave (positive amount)
-treat_gave = treat_df[treat_df["gave"] == 1].copy()
-
-# Calculate mean donation amounts by match ratio
-mean_amt_1_1 = treat_gave[treat_gave["ratio1"] == 1]["amount"].mean()
-mean_amt_2_1 = treat_gave[treat_gave["ratio2"] == 1]["amount"].mean()
-mean_amt_3_1 = treat_gave[treat_gave["ratio3"] == 1]["amount"].mean()
-
-print("\nMean donation amounts by match ratio:")
-print(f"1:1 match: ${mean_amt_1_1:.2f}")
-print(f"2:1 match: ${mean_amt_2_1:.2f}")
-print(f"3:1 match: ${mean_amt_3_1:.2f}")
-
-# T-test for donation amounts: 2:1 vs 1:1
-amt_1_1 = treat_gave[treat_gave["ratio1"] == 1]["amount"]
-amt_2_1 = treat_gave[treat_gave["ratio2"] == 1]["amount"]
-t_amt_2, p_amt_2 = stats.ttest_ind(amt_2_1, amt_1_1)
-print("\nT-test for donation amounts (2:1 vs 1:1):")
-print(f"t-statistic: {t_amt_2:.4f}")
-print(f"p-value: {p_amt_2:.4f}")
 #
 #
 #
@@ -323,7 +293,12 @@ print(f"p-value: {p_amt_2:.4f}")
 #
 #
 #
-#| echo: false
+#
+#
+#
+#
+#
+#| collapse: true
 # T-test for donation amount
 amount_control = df[df["treatment"] == 0]["amount"]
 amount_treatment = df[df["treatment"] == 1]["amount"]
@@ -397,14 +372,13 @@ plt.show()
 #
 #
 #
-#| echo: false
-# Set random seed for reproducibility
+#| collapse: true
 np.random.seed(42)
 
 # Parameters
 n = 10000
-p_treat = 0.022  # True probability for treatment group
-p_control = 0.018  # True probability for control group
+p_treat = 0.022
+p_control = 0.018
 true_diff = p_treat - p_control
 
 # Simulate
@@ -414,10 +388,9 @@ diffs = treatment - control
 cumulative_avg = np.cumsum(diffs) / np.arange(1, n + 1)
 
 # Plot
-plt.figure(figsize=(12, 7))
-plt.plot(cumulative_avg, label="Cumulative Avg. Difference", color="#3498db", linewidth=2)
-plt.axhline(true_diff, color='red', linestyle='--', linewidth=2, 
-            label=f"True Difference ({true_diff:.3f})")
+plt.figure(figsize=(10, 6))
+plt.plot(cumulative_avg, label="Cumulative Avg. Difference", color="steelblue", linewidth=2)
+plt.axhline(true_diff, color='red', linestyle='--', linewidth=2, label=f"True Difference ({true_diff:.3f})")
 
 # Style
 plt.title("Law of Large Numbers Simulation", fontsize=16, weight='bold')
@@ -428,49 +401,14 @@ plt.xticks(fontsize=11)
 plt.yticks(fontsize=11)
 plt.legend(fontsize=12)
 plt.grid(True, linestyle=':', alpha=0.7)
-
-# Fix the y-axis limits to ensure the graph is not upside down
-plt.ylim(0, 0.01)  # Set appropriate y-axis limits
-
-# Add a horizontal line at y=0 for reference
-plt.axhline(0, color='gray', linestyle=':', alpha=0.5)
-
+plt.gca().invert_yaxis()  # Invert the y-axis
 plt.tight_layout()
+
+# Show
 plt.show()
 
-# Create a more detailed simulation to better illustrate convergence
-# Multiple simulations to show variability
-n_sims = 5
-n_obs = 10000
-plt.figure(figsize=(12, 7))
-
-for i in range(n_sims):
-    # Simulate
-    treatment = np.random.binomial(1, p_treat, n_obs)
-    control = np.random.binomial(1, p_control, n_obs)
-    diffs = treatment - control
-    cumulative_avg = np.cumsum(diffs) / np.arange(1, n_obs + 1)
-    
-    # Plot
-    plt.plot(cumulative_avg, label=f"Simulation {i+1}", alpha=0.7, linewidth=1.5)
-
-plt.axhline(true_diff, color='red', linestyle='--', linewidth=2, 
-            label=f"True Difference ({true_diff:.3f})")
-
-# Style
-plt.title("Law of Large Numbers: Multiple Simulations", fontsize=16, weight='bold')
-plt.xscale('log')
-plt.xlabel("Number of Observations", fontsize=13)
-plt.ylabel("Cumulative Average Difference", fontsize=13)
-plt.xticks(fontsize=11)
-plt.yticks(fontsize=11)
-plt.legend(fontsize=12)
-plt.grid(True, linestyle=':', alpha=0.7)
-plt.ylim(0, 0.01)  # Set appropriate y-axis limits
-plt.axhline(0, color='gray', linestyle=':', alpha=0.5)
-
-plt.tight_layout()
-plt.show()
+# Shortened explanation
+print("This simulation demonstrates how the sample average converges to the true population difference as sample size increases.")
 #
 #
 #
@@ -480,9 +418,7 @@ plt.show()
 #
 #
 #
-#
-#
-#| echo: false
+#| collapse: true
 # Parameters
 p_control = 0.018
 p_treat = 0.022
@@ -517,8 +453,6 @@ plt.suptitle("Central Limit Theorem Simulation: Distribution of Mean Differences
              fontsize=16, weight='bold')
 plt.tight_layout(rect=[0, 0, 1, 0.95])
 plt.show()
-#
-#
 #
 #
 #
