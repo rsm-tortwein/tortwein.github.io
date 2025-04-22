@@ -16,7 +16,7 @@ The experiment was designed to test whether offering a matching grant would incr
 ### Description
 
 ```{python}
-#| echo: false
+#| collapse: true
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -105,7 +105,7 @@ Before analyzing the treatment effects, it's important to verify that the random
 I'll test several variables to see if the treatment and control groups are statistically significantly different at the 95% confidence level. I'll use both t-tests and linear regressions to confirm the results.
 
 ```{python}
-#| echo: false
+#| collapse: true
 # Calculate summary statistics for key variables by treatment group
 summary_stats = df.groupby("treatment")[["gave", "amount", "mrm2", "freq", "years", "female", "couple"]].mean()
 print("Summary Statistics by Treatment Group:")
@@ -122,7 +122,7 @@ print(f"p-value: {p_val_mrm2:.4f}")
 # Linear regression: mrm2 ~ treatment
 model_mrm2 = smf.ols("mrm2 ~ treatment", data=df).fit()
 print("\nLinear regression for months since last donation:")
-print(model_mrm2.summary().tables[1])  # Only show the coefficients table
+print(model_mrm2.summary().tables[1])
 
 # T-test for frequency of prior donations
 control_freq = df[df["treatment"] == 0]["freq"]
@@ -135,10 +135,27 @@ print(f"p-value: {p_val_freq:.4f}")
 # Linear regression: freq ~ treatment
 model_freq = smf.ols("freq ~ treatment", data=df).fit()
 print("\nLinear regression for frequency of prior donations:")
-print(model_freq.summary().tables[1])  # Only show the coefficients table
+print(model_freq.summary().tables[1])
+
+# Additional balance tests for key demographic variables
+# T-test for female
+control_female = df[df["treatment"] == 0]["female"]
+treat_female = df[df["treatment"] == 1]["female"]
+t_stat_female, p_val_female = stats.ttest_ind(control_female, treat_female)
+print("\nT-test for female:")
+print(f"t-statistic: {t_stat_female:.4f}")
+print(f"p-value: {p_val_female:.4f}")
+
+# T-test for couple
+control_couple = df[df["treatment"] == 0]["couple"]
+treat_couple = df[df["treatment"] == 1]["couple"]
+t_stat_couple, p_val_couple = stats.ttest_ind(control_couple, treat_couple)
+print("\nT-test for couple:")
+print(f"t-statistic: {t_stat_couple:.4f}")
+print(f"p-value: {p_val_couple:.4f}")
 ```
 
-The balance tests show that the treatment and control groups are statistically similar in terms of months since last donation (p-value = {p_val_mrm2:.4f}) and frequency of prior donations (p-value = {p_val_freq:.4f}). This suggests that the randomization was successful, and any differences in donation behavior between the groups can be attributed to the treatment rather than pre-existing differences.
+The balance tests show that the treatment and control groups are statistically similar in terms of months since last donation and frequency of prior donations. This suggests that the randomization was successful, and any differences in donation behavior between the groups can be attributed to the treatment rather than pre-existing differences.
 
 This is an important first step in the analysis, as it validates the experimental design. If the groups were not balanced, we would need to control for these differences in our analysis of treatment effects.
 
@@ -149,7 +166,7 @@ This is an important first step in the analysis, as it validates the experimenta
 First, I analyze whether matched donations lead to an increased response rate of making a donation.
 
 ```{python}
-#| echo: false
+#| collapse: true
 # Calculate proportion of people who donated in each group
 donation_rates = df.groupby("treatment")["gave"].mean()
 donation_rates.index = ["Control", "Treatment"]
@@ -193,7 +210,7 @@ print("\nMarginal effects:")
 print(mfx.summary().tables[0])  # Only show the marginal effects table
 ```
 
-The results show that the treatment group had a higher donation rate ({donation_rates[1]:.3f}) compared to the control group ({donation_rates[0]:.3f}). This difference is statistically significant (p-value = {p_val_gave:.4f}), indicating that offering a matching grant increases the likelihood of receiving a donation.
+The results show that the treatment group had a higher donation rate compared to the control group. This difference is statistically significant, indicating that offering a matching grant increases the likelihood of receiving a donation.
 
 From a behavioral perspective, this suggests that the presence of a matching grant creates a sense of urgency or leverage that motivates potential donors to give. The matching grant effectively multiplies the impact of their donation, which appears to be a compelling incentive.
 
@@ -202,7 +219,7 @@ From a behavioral perspective, this suggests that the presence of a matching gra
 Next, I assess the effectiveness of different sizes of matched donations on the response rate.
 
 ```{python}
-#| echo: false
+#| collapse: true
 # Filter to only treatment group
 treat_df = df[df["treatment"] == 1].copy()
 
@@ -278,7 +295,7 @@ From a behavioral perspective, this is an interesting finding. It suggests that 
 In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.
 
 ```{python}
-#| echo: false
+#| collapse: true
 # T-test for donation amount
 amount_control = df[df["treatment"] == 0]["amount"]
 amount_treatment = df[df["treatment"] == 1]["amount"]
@@ -337,7 +354,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The analysis of donation amounts reveals that the treatment group has a higher average donation amount (${mean_treat:.2f}) compared to the control group (${mean_control:.2f}). This difference is statistically significant (p-value = {p_val_amt:.4f}).
+The analysis of donation amounts reveals that the treatment group has a higher average donation amount compared to the control group. This difference is statistically significant.
 
 When we limit the analysis to only those who made a donation, we find that the treatment group still gives more on average. This suggests that not only does the matching grant increase the likelihood of receiving a donation, but it also increases the amount donated by those who choose to give.
 
@@ -352,53 +369,96 @@ To better understand the statistical properties of our results, I'll conduct a s
 The Law of Large Numbers states that as the sample size increases, the sample mean will converge to the population mean. I'll simulate this using the true probabilities from our data.
 
 ```{python}
-#| echo: false
-# Set random seed for reproducibility
+#| collapse: true
 np.random.seed(42)
 
-# Parameters
+# Define simulation parameters based on observed data
 n = 10000
-p_treat = 0.022  # True probability for treatment group
-p_control = 0.018  # True probability for control group
+p_treat = 0.022
+p_control = 0.018
 true_diff = p_treat - p_control
+n_sims = 5
 
-# Simulate
-treatment = np.random.binomial(1, p_treat, n)
-control = np.random.binomial(1, p_control, n)
-diffs = treatment - control
-cumulative_avg = np.cumsum(diffs) / np.arange(1, n + 1)
-
-# Plot
+# First plot: Multiple simulations showing convergence
 plt.figure(figsize=(12, 7))
-plt.plot(cumulative_avg, label="Cumulative Avg. Difference", color="#3498db", linewidth=2)
+
+for i in range(n_sims):
+    treatment = np.random.binomial(1, p_treat, n)
+    control = np.random.binomial(1, p_control, n)
+    diffs = treatment - control
+    cumulative_avg = np.cumsum(diffs) / np.arange(1, n + 1)
+    plt.plot(np.arange(1, n + 1), cumulative_avg, 
+            alpha=0.6, linewidth=1.5,
+            label=f"Simulation {i+1}")
+
 plt.axhline(true_diff, color='red', linestyle='--', linewidth=2, 
             label=f"True Difference ({true_diff:.3f})")
+plt.axhline(0, color='gray', linestyle=':', alpha=0.5)
 
-# Style
-plt.title("Law of Large Numbers Simulation", fontsize=16, weight='bold')
+plt.title("Law of Large Numbers: Multiple Simulations", 
+          fontsize=16, weight='bold', pad=20)
 plt.xscale('log')
-plt.xlabel("Number of Observations", fontsize=13)
+plt.xlabel("Number of Observations (log scale)", fontsize=13)
 plt.ylabel("Cumulative Average Difference", fontsize=13)
 plt.xticks(fontsize=11)
 plt.yticks(fontsize=11)
-plt.legend(fontsize=12)
-plt.grid(True, linestyle=':', alpha=0.7)
+plt.ylim(-0.002, 0.008)
+plt.grid(True, which='major', linestyle='-', alpha=0.3)
+plt.grid(True, which='minor', linestyle=':', alpha=0.2)
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', 
+          fontsize=10, frameon=True)
+plt.tight_layout()
+plt.show()
 
-# Fix the y-axis limits to ensure the graph is not upside down
-plt.ylim(0, 0.01)  # Set appropriate y-axis limits
+# Second plot: Convergence with confidence intervals
+plt.figure(figsize=(12, 7))
 
+colors = plt.cm.viridis(np.linspace(0, 1, n_sims))
+for i, color in enumerate(colors):
+    treatment = np.random.binomial(1, p_treat, n)
+    control = np.random.binomial(1, p_control, n)
+    diffs = treatment - control
+    cumulative_avg = np.cumsum(diffs) / np.arange(1, n + 1)
+    plt.plot(np.arange(1, n + 1), cumulative_avg, 
+            color=color, alpha=0.7, linewidth=1.5,
+            label=f"Simulation {i+1}")
+
+# Add reference lines and confidence interval
+plt.axhline(true_diff, color='red', linestyle='--', linewidth=2, 
+            label=f"True Difference ({true_diff:.3f})")
+
+# Calculate and plot 95% confidence interval
+ci_upper = true_diff + 2 * np.sqrt(true_diff * (1-true_diff) / np.arange(1, n + 1))
+ci_lower = true_diff - 2 * np.sqrt(true_diff * (1-true_diff) / np.arange(1, n + 1))
+plt.fill_between(np.arange(1, n + 1), ci_lower, ci_upper, 
+                 color='gray', alpha=0.2, label='95% Confidence Interval')
+
+plt.title("Law of Large Numbers: Convergence with Confidence Interval", 
+          fontsize=16, weight='bold', pad=20)
+plt.xscale('log')
+plt.xlabel("Number of Observations (log scale)", fontsize=13)
+plt.ylabel("Cumulative Average Difference", fontsize=13)
+plt.xticks(fontsize=11)
+plt.yticks(fontsize=11)
+plt.ylim(-0.002, 0.008)
+plt.grid(True, which='major', linestyle='-', alpha=0.3)
+plt.grid(True, which='minor', linestyle=':', alpha=0.2)
+plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left', 
+          fontsize=10, frameon=True)
 plt.tight_layout()
 plt.show()
 ```
 
-This simulation demonstrates the Law of Large Numbers. As the sample size increases, the cumulative average difference between the treatment and control groups converges to the true difference (0.004). This illustrates why larger sample sizes lead to more reliable estimates.
+This simulation demonstrates the Law of Large Numbers in two complementary ways. First, we see multiple simulations converging to the true difference (0.004) as the sample size increases. The variation between simulations illustrates the randomness in small samples while showing how they all eventually converge to the true value.
+
+The second plot adds a 95% confidence interval around the true difference, showing how the uncertainty decreases with larger sample sizes. This illustrates why larger sample sizes lead to more reliable estimates. The convergence is particularly rapid in the early observations (note the logarithmic scale), with diminishing improvements as the sample size grows very large.
 
 ### Central Limit Theorem
 
 The Central Limit Theorem states that the distribution of sample means will approach a normal distribution as the sample size increases, regardless of the shape of the population distribution.
 
 ```{python}
-#| echo: false
+#| collapse: true
 # Parameters
 p_control = 0.018
 p_treat = 0.022
