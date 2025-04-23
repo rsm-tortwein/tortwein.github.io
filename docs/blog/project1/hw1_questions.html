@@ -221,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
-<div id="3eef7c36" class="cell" data-collapse="true" data-execution_count="1">
+<div id="05e0ca9c" class="cell" data-collapse="true" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 First few rows of the dataset:</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
 
@@ -640,7 +640,7 @@ Variable Definitions
 <section id="balance-test" class="level2">
 <h2 class="anchored" data-anchor-id="balance-test">Balance Test</h2>
 <p>As an ad hoc test of the randomization mechanism, I provide a series of tests that compare aspects of the treatment and control groups to assess whether they are statistically significantly different from one another.</p>
-<div id="c6a9a837" class="cell" data-collapse="true" data-execution_count="2">
+<div id="2299ee34" class="cell" data-collapse="true" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform balance tests comparing treatment and control groups across non key variables</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compare_groups(df, var_name):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    control <span class="op">=</span> df[df[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">0</span>][var_name].dropna()</span>
@@ -760,7 +760,7 @@ treatment     -0.0120      0.108     -0.111      0.912      -0.224       0.200
 <section id="charitable-contribution-made" class="level3">
 <h3 class="anchored" data-anchor-id="charitable-contribution-made">Charitable Contribution Made</h3>
 <p>First, I analyze whether matched donations lead to an increased response rate of making a donation.</p>
-<div id="7ce3a255" class="cell" data-collapse="true" data-execution_count="3">
+<div id="0a60fe28" class="cell" data-collapse="true" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze impact of matching grants on donation probability using multiple statistical approaches</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>donation_rates <span class="op">=</span> df.groupby(<span class="st">"treatment"</span>)[<span class="st">"gave"</span>].mean()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>donation_rates.index <span class="op">=</span> [<span class="st">"Control"</span>, <span class="st">"Treatment"</span>]</span>
@@ -838,7 +838,7 @@ At:                           overall
 <p>The results show that the treatment group had a higher donation rate compared to the control group. This difference is statistically significant, indicating that offering a matching grant increases the likelihood of receiving a donation.</p>
 <p>From a behavioral perspective, this suggests that the presence of a matching grant creates a sense of urgency or leverage that motivates potential donors to give. The matching grant effectively multiplies the impact of their donation, which appears to be a compelling incentive. ### Differences between Match Rates</p>
 <p>Next, I assess the effectiveness of different sizes of matched donations on the response rate.</p>
-<div id="d5efcb05" class="cell" data-collapse="true" data-execution_count="4">
+<div id="625889ff" class="cell" data-collapse="true" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare effectiveness of different match ratios (1:1, 2:1, 3:1) on donation rates</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>treat_df <span class="op">=</span> df[df[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>].copy()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -925,7 +925,7 @@ Response rate differences:
 3:1 vs 2:1: 0.0001</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\timon\AppData\Local\Temp\ipykernel_24648\474621105.py:47: FutureWarning:
+<pre><code>C:\Users\timon\AppData\Local\Temp\ipykernel_12860\474621105.py:47: FutureWarning:
 
 
 
@@ -947,7 +947,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <section id="size-of-charitable-contribution" class="level3">
 <h3 class="anchored" data-anchor-id="size-of-charitable-contribution">Size of Charitable Contribution</h3>
 <p>In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.</p>
-<div id="f9570a38" class="cell" data-collapse="true" data-execution_count="5">
+<div id="fa31dfbf" class="cell" data-collapse="true" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyzing the impact of matching grants on donation amounts and visualize distributions</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>amount_control <span class="op">=</span> df[df[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">"amount"</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>amount_treatment <span class="op">=</span> df[df[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">"amount"</span>]</span>
@@ -1033,7 +1033,7 @@ Mean donation amount (control): $45.54</code></pre>
 <section id="law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
 <p>The Law of Large Numbers states that as the sample size increases, the sample mean will converge to the population mean. I’ll simulate this using the true probabilities from our data.</p>
-<div id="32122d40" class="cell" data-collapse="true" data-execution_count="6">
+<div id="667015a9" class="cell" data-collapse="true" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate Law of Large Numbers to demonstrate convergence of sample means to true difference</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1072,51 +1072,44 @@ Mean donation amount (control): $45.54</code></pre>
 <section id="central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
 <p>The Central Limit Theorem states that the distribution of sample means will approach a normal distribution as the sample size increases, regardless of the shape of the population distribution.</p>
-<div id="cd67aefc" class="cell" data-collapse="true" data-execution_count="7">
+<div id="fc201851" class="cell" data-collapse="true" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate Central Limit Theorem using different sample sizes to show convergence to normal distribution</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>n_sim <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">50</span>, <span class="dv">200</span>, <span class="dv">500</span>, <span class="dv">1000</span>]</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>axs <span class="op">=</span> axs.flatten()</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, n <span class="kw">in</span> <span class="bu">enumerate</span>(sample_sizes):</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    diff_means <span class="op">=</span> []</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_sim):</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        control_sample <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p_control, n)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        treat_sample <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p_treat, n)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        diff <span class="op">=</span> treat_sample.mean() <span class="op">-</span> control_sample.mean()</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        diff_means.append(diff)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    axs[i].hist(diff_means, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'#3498db'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    axs[i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(<span class="ss">f"Sample Size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    axs[i].set_xlabel(<span class="st">"Mean Difference (Treatment - Control)"</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">"Frequency"</span>)</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Central Limit Theorem Simulation: Distribution of Mean Differences"</span>, </span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, weight<span class="op">=</span><span class="st">'bold'</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>axs <span class="op">=</span> axs.flatten()</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, n <span class="kw">in</span> <span class="bu">enumerate</span>(sample_sizes):</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    diff_means <span class="op">=</span> []</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_sim):</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        control_sample <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p_control, n)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        treat_sample <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p_treat, n)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        diff <span class="op">=</span> treat_sample.mean() <span class="op">-</span> control_sample.mean()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        diff_means.append(diff)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    axs[i].hist(diff_means, bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'#3498db'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    axs[i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    axs[i].set_title(<span class="ss">f"Sample Size: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    axs[i].set_xlabel(<span class="st">"Mean Difference (Treatment - Control)"</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    axs[i].set_ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Central Limit Theorem Simulation: Distribution of Mean Differences"</span>, </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, weight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="hw1_questions_files/figure-html/cell-8-output-1.png" width="1333" height="945" class="figure-img"></p>
+<p><img src="hw1_questions_files/figure-html/cell-8-output-1.png" width="1334" height="945" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This simulation demonstrates the Central Limit Theorem by showing how the distribution of mean differences between treatment and control groups becomes increasingly normal as the sample size grows. Using our observed donation rates:</p>
-<ul>
-<li>At n=50: The distribution is somewhat irregular and skewed</li>
-<li>At n=200: The shape becomes more symmetric</li>
-<li>At n=500: A clear bell curve emerges</li>
-<li>At n=1000: The distribution is nearly perfectly normal</li>
-</ul>
-<p>This demonstration is particularly relevant for our analysis because it justifies our use of t-tests and regression analysis, even though the underlying donation data is highly skewed (most people give nothing, while a few give large amounts).</p>
+<p>This simulation demonstrates the Central Limit Theorem. As the sample size increases from 50 to 1000, the distribution of mean differences becomes increasingly normal. This is why we can use t-tests and regression analysis to make statistical inferences, even when the underlying data (donations) is not normally distributed.</p>
+<p>For the smallest sample size (50), the distribution is still somewhat skewed. However, as the sample size increases to 200, 500, and 1000, the distribution becomes more symmetric and bell-shaped, approaching a normal distribution.</p>
+<p>This is particularly important for our analysis because it justifies our use of parametric statistical tests, even though charitable donations are typically right-skewed (most people give small amounts, with a few giving very large amounts).</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
@@ -1125,7 +1118,7 @@ Mean donation amount (control): $45.54</code></pre>
 <ol type="1">
 <li>Matching grants significantly increase donation rates by 0.4 percentage points (from 1.8% to 2.2%, p &lt; 0.001)</li>
 <li>Higher match ratios (2:1 or 3:1 vs 1:1) do not yield additional benefits (all p-values &gt; 0.65)</li>
-<li>While the treatment group shows higher average donations ($45.14 vs $41.07 among donors), this difference is not statistically significant</li>
+<li>While the treatment group shows lower average donations, this difference is not statistically significant</li>
 </ol>
 <p>These results suggest nonprofits can effectively use matching grants without needing to secure higher match ratios.</p>
 
