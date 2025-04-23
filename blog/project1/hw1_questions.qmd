@@ -357,8 +357,6 @@ The Central Limit Theorem states that the distribution of sample means will appr
 n_sim = 1000
 sample_sizes = [50, 200, 500, 1000]
 
-np.random.seed(42)
-
 fig, axs = plt.subplots(2, 2, figsize=(14, 10))
 axs = axs.flatten()
 
