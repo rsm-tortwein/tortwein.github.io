@@ -7,6 +7,7 @@ callout-appearance: minimal
 
 ## Blueprinty Case Study
 
+
 ### Introduction
 
 Blueprinty is a small firm that makes software for developing blueprints specifically for submitting patent applications to the US patent office. Their marketing team would like to make the claim that patent applicants using Blueprinty's software are more successful in getting their patent applications approved. Ideal data to study such an effect might include the success rate of patent applications before using Blueprinty's software and after using it. Unfortunately, such data is not available. 
