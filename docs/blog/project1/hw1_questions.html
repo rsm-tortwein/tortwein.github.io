@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Timon Ortwein">
-<meta name="dcterms.date" content="2025-04-23">
+<meta name="dcterms.date" content="2025-05-01">
 
 <title>A Replication of Karlan and List (2007) – Timon’s Website</title>
 <style>
@@ -104,10 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -200,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 23, 2025</p>
+      <p class="date">May 1, 2025</p>
     </div>
   </div>
   
@@ -221,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
-<div id="05e0ca9c" class="cell" data-collapse="true" data-execution_count="1">
+<div id="fe75f834" class="cell" data-collapse="true" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -640,7 +637,7 @@ Variable Definitions
 <section id="balance-test" class="level2">
 <h2 class="anchored" data-anchor-id="balance-test">Balance Test</h2>
 <p>As an ad hoc test of the randomization mechanism, I provide a series of tests that compare aspects of the treatment and control groups to assess whether they are statistically significantly different from one another.</p>
-<div id="2299ee34" class="cell" data-collapse="true" data-execution_count="2">
+<div id="ea95a563" class="cell" data-collapse="true" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform balance tests comparing treatment and control groups across non key variables</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compare_groups(df, var_name):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    control <span class="op">=</span> df[df[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">0</span>][var_name].dropna()</span>
@@ -760,7 +757,7 @@ treatment     -0.0120      0.108     -0.111      0.912      -0.224       0.200
 <section id="charitable-contribution-made" class="level3">
 <h3 class="anchored" data-anchor-id="charitable-contribution-made">Charitable Contribution Made</h3>
 <p>First, I analyze whether matched donations lead to an increased response rate of making a donation.</p>
-<div id="0a60fe28" class="cell" data-collapse="true" data-execution_count="3">
+<div id="37698fde" class="cell" data-collapse="true" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze impact of matching grants on donation probability using multiple statistical approaches</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>donation_rates <span class="op">=</span> df.groupby(<span class="st">"treatment"</span>)[<span class="st">"gave"</span>].mean()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>donation_rates.index <span class="op">=</span> [<span class="st">"Control"</span>, <span class="st">"Treatment"</span>]</span>
@@ -838,7 +835,7 @@ At:                           overall
 <p>The results show that the treatment group had a higher donation rate compared to the control group. This difference is statistically significant, indicating that offering a matching grant increases the likelihood of receiving a donation.</p>
 <p>From a behavioral perspective, this suggests that the presence of a matching grant creates a sense of urgency or leverage that motivates potential donors to give. The matching grant effectively multiplies the impact of their donation, which appears to be a compelling incentive. ### Differences between Match Rates</p>
 <p>Next, I assess the effectiveness of different sizes of matched donations on the response rate.</p>
-<div id="625889ff" class="cell" data-collapse="true" data-execution_count="4">
+<div id="92e9f45e" class="cell" data-collapse="true" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare effectiveness of different match ratios (1:1, 2:1, 3:1) on donation rates</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>treat_df <span class="op">=</span> df[df[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>].copy()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -925,7 +922,7 @@ Response rate differences:
 3:1 vs 2:1: 0.0001</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\timon\AppData\Local\Temp\ipykernel_12860\474621105.py:47: FutureWarning:
+<pre><code>C:\Users\timon\AppData\Local\Temp\ipykernel_16356\474621105.py:47: FutureWarning:
 
 
 
@@ -947,7 +944,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <section id="size-of-charitable-contribution" class="level3">
 <h3 class="anchored" data-anchor-id="size-of-charitable-contribution">Size of Charitable Contribution</h3>
 <p>In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.</p>
-<div id="fa31dfbf" class="cell" data-collapse="true" data-execution_count="5">
+<div id="5f57f1e6" class="cell" data-collapse="true" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyzing the impact of matching grants on donation amounts and visualize distributions</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>amount_control <span class="op">=</span> df[df[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">"amount"</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>amount_treatment <span class="op">=</span> df[df[<span class="st">"treatment"</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">"amount"</span>]</span>
@@ -1033,7 +1030,7 @@ Mean donation amount (control): $45.54</code></pre>
 <section id="law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
 <p>The Law of Large Numbers states that as the sample size increases, the sample mean will converge to the population mean. I’ll simulate this using the true probabilities from our data.</p>
-<div id="667015a9" class="cell" data-collapse="true" data-execution_count="6">
+<div id="0e1c0175" class="cell" data-collapse="true" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate Law of Large Numbers to demonstrate convergence of sample means to true difference</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1072,7 +1069,7 @@ Mean donation amount (control): $45.54</code></pre>
 <section id="central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
 <p>The Central Limit Theorem states that the distribution of sample means will approach a normal distribution as the sample size increases, regardless of the shape of the population distribution.</p>
-<div id="fc201851" class="cell" data-collapse="true" data-execution_count="7">
+<div id="ee30e571" class="cell" data-collapse="true" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate Central Limit Theorem using different sample sizes to show convergence to normal distribution</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>n_sim <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">50</span>, <span class="dv">200</span>, <span class="dv">500</span>, <span class="dv">1000</span>]</span>
@@ -1116,8 +1113,8 @@ Mean donation amount (control): $45.54</code></pre>
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>Key findings from this replication:</p>
 <ol type="1">
-<li>Matching grants significantly increase donation rates by 0.4 percentage points (from 1.8% to 2.2%, p &lt; 0.001)</li>
-<li>Higher match ratios (2:1 or 3:1 vs 1:1) do not yield additional benefits (all p-values &gt; 0.65)</li>
+<li>Matching grants significantly increase donation rates by 0.4 percentage points (from 1.8% to 2.2%, p &lt; 0.002)</li>
+<li>Higher match ratios (2:1 or 3:1 vs 1:1) do not yield additional benefits (all p-values &gt; 0.85)</li>
 <li>While the treatment group shows lower average donations, this difference is not statistically significant</li>
 </ol>
 <p>These results suggest nonprofits can effectively use matching grants without needing to secure higher match ratios.</p>
