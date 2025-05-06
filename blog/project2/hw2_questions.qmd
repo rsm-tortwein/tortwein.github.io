@@ -5,10 +5,6 @@ date: today
 callout-appearance: minimal
 ---
 
-## Executive Summary
-
-This report presents two case studies demonstrating the application of Poisson regression in business analytics. The first case study examines the relationship between Blueprinty's software usage and patent success rates, while the second analyzes factors influencing AirBnB listing reviews. Both analyses utilize Poisson regression to model count data.
-
 ## Blueprinty Case Study
 
 ### Introduction
