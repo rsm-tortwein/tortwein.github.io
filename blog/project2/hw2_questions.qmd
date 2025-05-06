@@ -136,7 +136,7 @@ plt.grid(True)
 plt.show()
 
 sample_mean = round(np.mean(Y),2)
-print("MLE for lambda:" sample_mean)
+print("MLE for lambda: {sample_mean}")
 ```
 
 The plot above shows the log-likelihood as a function of $\lambda$. The maximum occurs at the sample mean, which is the MLE for the Poisson rate parameter.
@@ -255,9 +255,12 @@ The results from the manual calculation matches those from the built-in GLM func
 
 ### Interpretation of Results
 
-The Poisson regression results provide meaningful insights into the factors associated with patenting success among firms. Most notably, firms that use Blueprinty’s software are predicted to file more patents than comparable firms that do not use the software. This relationship remains positive even after controlling for other characteristics such as firm age and regional location, suggesting that Blueprinty’s tools may be effectively supporting innovation efforts. 
+The Poisson regression results provide meaningful insights into the factors associated with patenting success among firms. Most notably, firms that use Blueprinty’s software are predicted to file more patents than comparable firms that do not use the software. This relationship remains positive even after controlling for other characteristics such as firm age and regional location, suggesting that Blueprinty’s tools may be effectively supporting innovation efforts.
+
 The model also reveals a non-linear relationship between age and patent output: patenting tends to increase as firms age, but eventually declines, consistent with the idea that younger firms may be more dynamic and innovative, while older firms could become less agile over time. 
+
 I made this assumption as both age and age squared are negative and statistically significant. This pattern suggests an inverted-U relationship. The patenting activity tends to rise as firms age initially, but eventually declines, indicating that older firms may become less innovative over time. 
+
 Finally, the analysis finds no strong or consistent evidence that region plays a significant role in driving patent activity. Once differences in firm-level factors are accounted for, geographic location does not appear to be a major determinant of patenting success.
 
 ### Average Treatment Effect Analysis
@@ -278,7 +281,9 @@ print(round(avg_effect,3))
 ```
 
 To assess the practical impact of Blueprinty's software, we estimated the average treatment effect by comparing predicted patent counts for all firms as if they were customers versus non-customers.
+
 The analysis suggests that being a customer of Blueprinty's software has a positive effect on patent success. Using a Poisson regression model, we estimated that firms using Blueprinty's software are expected to file approximately 0.793 more patents on average compared to similar firms that do not use the software, holding all other firm characteristics constant.
+
 These results support the marketing claim that Blueprinty's software is linked to greater patenting success. This provides strong evidence that customers of Blueprinty tend to outperform non-customers in terms of patent output, even after accounting for other important firm characteristics.
 
 
@@ -381,8 +386,11 @@ The regression summary above provides the same values as our manual approach imp
 ### Interpretation of Results
 
 Listings with instant booking enabled tend to receive more reviews, suggesting that ease of booking increases guest engagement. Cleanliness scores are also positively associated with review volume, highlighting the importance of hygiene.
+
 Surprisingly, higher scores for location and value are linked to fewer reviews. This may reflect overlapping review dimensions or unobserved guest behavior.
+
 Entire homes and apartments receive more reviews than private or shared rooms, likely due to greater guest preference for privacy. Price has no meaningful impact on review count.
+
 Overall, instant booking, cleanliness, and room type are stronger predictors of review volume than pricing or location/value ratings.
 
 ## Conclusion
@@ -390,6 +398,7 @@ Overall, instant booking, cleanliness, and room type are stronger predictors of 
 This analysis demonstrates the application of Poisson regression in two distinct business contexts: patent analysis for Blueprinty and review analysis for AirBnB. In both cases, we successfully modeled count data using Poisson regression.
 
 For Blueprinty, our analysis revealed that firms using their software tend to have higher patent success rates, even after controlling for firm age and regional differences. The Poisson regression model provided valuable insights into the relationship between software usage and patent outcomes, supporting the marketing team's claims while accounting for important confounding variables.
+
 In the AirBnB case study, we identified key factors influencing the number of reviews, with instant bookability and room type showing particularly strong effects. The analysis provides actionable insights for hosts looking to increase their listing visibility and engagement.
 
 

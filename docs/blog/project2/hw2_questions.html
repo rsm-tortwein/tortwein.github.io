@@ -181,8 +181,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
-  <li><a href="#blueprinty-case-study" id="toc-blueprinty-case-study" class="nav-link" data-scroll-target="#blueprinty-case-study">Blueprinty Case Study</a>
+  <li><a href="#blueprinty-case-study" id="toc-blueprinty-case-study" class="nav-link active" data-scroll-target="#blueprinty-case-study">Blueprinty Case Study</a>
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a></li>
@@ -190,18 +189,18 @@ window.Quarto = {
   <li><a href="#estimation-of-simple-poisson-model" id="toc-estimation-of-simple-poisson-model" class="nav-link" data-scroll-target="#estimation-of-simple-poisson-model">Estimation of Simple Poisson Model</a></li>
   <li><a href="#poisson-regression-model" id="toc-poisson-regression-model" class="nav-link" data-scroll-target="#poisson-regression-model">Poisson Regression Model</a></li>
   <li><a href="#comparison-with-built-in-glm" id="toc-comparison-with-built-in-glm" class="nav-link" data-scroll-target="#comparison-with-built-in-glm">Comparison with Built-in GLM</a></li>
+  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results">Interpretation of Results</a></li>
   <li><a href="#average-treatment-effect-analysis" id="toc-average-treatment-effect-analysis" class="nav-link" data-scroll-target="#average-treatment-effect-analysis">Average Treatment Effect Analysis</a></li>
-  <li><a href="#average-treatment-effect-interpretation" id="toc-average-treatment-effect-interpretation" class="nav-link" data-scroll-target="#average-treatment-effect-interpretation">Average Treatment Effect Interpretation</a></li>
   </ul></li>
   <li><a href="#airbnb-case-study" id="toc-airbnb-case-study" class="nav-link" data-scroll-target="#airbnb-case-study">AirBnB Case Study</a>
   <ul class="collapse">
   <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1">Introduction</a></li>
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a></li>
-  <li><a href="#maximum-likelihood-estimation-mle-by-hand" id="toc-maximum-likelihood-estimation-mle-by-hand" class="nav-link" data-scroll-target="#maximum-likelihood-estimation-mle-by-hand">Maximum Likelihood Estimation (MLE) by Hand</a></li>
+  <li><a href="#maximum-likelihood-estimation-by-hand" id="toc-maximum-likelihood-estimation-by-hand" class="nav-link" data-scroll-target="#maximum-likelihood-estimation-by-hand">Maximum Likelihood Estimation by Hand</a></li>
   <li><a href="#model-fitting-with-built-in-glm" id="toc-model-fitting-with-built-in-glm" class="nav-link" data-scroll-target="#model-fitting-with-built-in-glm">Model Fitting with Built-in GLM</a></li>
   <li><a href="#interpretation-of-results-1" id="toc-interpretation-of-results-1" class="nav-link" data-scroll-target="#interpretation-of-results-1">Interpretation of Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -239,10 +238,6 @@ window.Quarto = {
 </header>
 
 
-<section id="executive-summary" class="level2">
-<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
-<p>This report presents two case studies demonstrating the application of Poisson regression in business analytics. The first case study examines the relationship between Blueprinty’s software usage and patent success rates, while the second analyzes factors influencing AirBnB listing reviews. Both analyses utilize Poisson regression to model count data, accounting for various covariates and potential confounding factors.</p>
-</section>
 <section id="blueprinty-case-study" class="level2">
 <h2 class="anchored" data-anchor-id="blueprinty-case-study">Blueprinty Case Study</h2>
 <section id="introduction" class="level3">
@@ -256,7 +251,7 @@ window.Quarto = {
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>Let’s begin by examining the distribution of patents between Blueprinty customers and non-customers. This will give us our first insight into whether there might be a relationship between using Blueprinty’s software and patent success.</p>
-<div id="4c49f2e6" class="cell" data-execution_count="1">
+<div id="a6a9fabc" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -281,7 +276,7 @@ window.Quarto = {
 </div>
 <section id="patent-distribution-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="patent-distribution-analysis">Patent Distribution Analysis</h4>
-<div id="f37b9606" class="cell" data-execution_count="2">
+<div id="17df06c4" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot patent distributions</span></span>
@@ -323,7 +318,7 @@ Customers (1): 4.13</code></pre>
 <section id="regional-and-age-distribution" class="level4">
 <h4 class="anchored" data-anchor-id="regional-and-age-distribution">Regional and Age Distribution</h4>
 <p>Next, we examine whether customer status is related to region or firm age, which could confound our analysis.</p>
-<div id="a81b0a8a" class="cell" data-execution_count="3">
+<div id="46fbc3dc" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze regional distribution</span></span>
@@ -390,10 +385,7 @@ iscustomer
 Name: age, dtype: float64</code></pre>
 </div>
 </div>
-<p>Analysis reveals significant differences in both regional and age distributions between customers and non-customers, highlighting the need to control for these variables in our regression analysis.</p>
-<p>Looking at the regional distribution, we can observe notable variations in customer adoption across different regions. The northeast region shows higher proportions of Blueprinty customers than others, suggesting potential geographic clustering. This could be due to various factors such as regional business networks, local marketing efforts or other.</p>
-<p>The age comparison between customers and non-customers is particularly revealing. The boxplots show that Blueprinty’s customer base tends to differ in age composition from non-customers. This age disparity could be an important confounding factor when analyzing patent success rates, as older firms might naturally have more experience with the patent application process and more resources to dedicate to R&amp;D efforts.</p>
-<p>These systematic differences in both regional distribution and firm age underscore the importance of controlling for these variables in our subsequent analysis. Without accounting for these factors, we might incorrectly attribute differences in patent success rates to Blueprinty’s software when they could be partially explained by these underlying characteristics.</p>
+<p>Looking at the regional distribution, we can observe notable variations in customer adoption across different regions. The northeast region shows higher proportions of Blueprinty customers than others, suggesting potential geographic clustering. This could be due to various factors such as local marketing efforts or other. The age comparison between customers and non-customers reveals that there is not much variation in age. The boxplots show that Blueprinty’s customer base does not significantly tend to differ in age composition from non-customers. The differences in regional distribution underscores the importance of controlling for this variables in our subsequent analysis. Without accounting for these factors, we might incorrectly attribute differences in patent success rates to Blueprinty’s software when they could be partially explained by this underlying characteristic.</p>
 </section>
 </section>
 <section id="estimation-of-simple-poisson-model" class="level3">
@@ -402,7 +394,7 @@ Name: age, dtype: float64</code></pre>
 <p>For a sample of n independent observations <span class="math inline">\(Y_1, ..., Y_n\)</span> from a Poisson distribution with parameter <span class="math inline">\(\lambda\)</span>, the likelihood function is:</p>
 <p><span class="math inline">\(L(\lambda|Y) = \prod_{i=1}^n f(Y_i|\lambda) = \prod_{i=1}^n \frac{e^{-\lambda}\lambda^{Y_i}}{Y_i!}\)</span></p>
 <p>This represents the probability of observing our data Y given the parameter <span class="math inline">\(\lambda\)</span>. The product comes from the independence of observations.</p>
-<div id="9240bfab" class="cell" data-execution_count="4">
+<div id="95b88d58" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_loglikelihood(lambda_, Y):</span>
@@ -426,8 +418,8 @@ Name: age, dtype: float64</code></pre>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>sample_mean <span class="op">=</span> np.mean(Y)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample mean (MLE for λ): </span><span class="sc">{</span>sample_mean<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>sample_mean <span class="op">=</span> <span class="bu">round</span>(np.mean(Y),<span class="dv">2</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MLE for lambda: </span><span class="sc">{sample_mean}</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -437,12 +429,12 @@ Name: age, dtype: float64</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Sample mean (MLE for λ): 3.68</code></pre>
+<pre><code>MLE for lambda: {sample_mean}</code></pre>
 </div>
 </div>
 <p>The plot above shows the log-likelihood as a function of <span class="math inline">\(\lambda\)</span>. The maximum occurs at the sample mean, which is the MLE for the Poisson rate parameter.</p>
 <p>We can also confirm this by direct optimization:</p>
-<div id="702630f0" class="cell" data-execution_count="5">
+<div id="ddd7ad65" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neg_poisson_loglikelihood(lambda_, Y):</span>
@@ -460,7 +452,7 @@ Name: age, dtype: float64</code></pre>
 <h3 class="anchored" data-anchor-id="poisson-regression-model">Poisson Regression Model</h3>
 <p>Next, we extend our simple Poisson model to a Poisson Regression Model such that <span class="math inline">\(Y_i = \text{Poisson}(\lambda_i)\)</span> where <span class="math inline">\(\lambda_i = \exp(X_i'\beta)\)</span>. The interpretation is that the success rate of patent awards is not constant across all firms (<span class="math inline">\(\lambda\)</span>) but rather is a function of firm characteristics <span class="math inline">\(X_i\)</span>. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.</p>
 <p>To account for firm characteristics, we fit a Poisson regression model where the expected number of patents depends on age, age squared, region, and customer status.</p>
-<div id="a874c787" class="cell" data-execution_count="6">
+<div id="a2a2b807" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> neg_log_likelihood(beta, Y, X):</span>
@@ -477,7 +469,7 @@ Name: age, dtype: float64</code></pre>
 </details>
 </div>
 <p>Let’s estimate the Poisson regression model and analyze the results:</p>
-<div id="76540cee" class="cell" data-execution_count="7">
+<div id="2a1c787c" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -533,7 +525,11 @@ region_South           0.0565      1.3112
 region_Southwest       0.0506      0.3889</code></pre>
 </div>
 </div>
-<div id="95194a75" class="cell" data-execution_count="8">
+</section>
+<section id="comparison-with-built-in-glm" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-with-built-in-glm">Comparison with Built-in GLM</h3>
+<p>Next we double check our result with the built in GLM function:</p>
+<div id="1a6b75c4" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -565,7 +561,7 @@ Model Family:                 Poisson   Df Model:                            7
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -3258.1
 Date:                Mon, 05 May 2025   Deviance:                       2143.3
-Time:                        22:54:41   Pearson chi2:                 2.07e+03
+Time:                        23:48:28   Pearson chi2:                 2.07e+03
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.1360
 Covariance Type:            nonrobust                                         
 ====================================================================================
@@ -582,23 +578,15 @@ region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0
 ====================================================================================</code></pre>
 </div>
 </div>
-<section id="interpretation-of-results" class="level4">
-<h4 class="anchored" data-anchor-id="interpretation-of-results">Interpretation of Results</h4>
-<p>By extending the model to include firm characteristics, we can better understand what drives patenting success. The Poisson regression results show:</p>
-<ul>
-<li><p><strong>Customer Status:</strong> Firms that use Blueprinty’s software are expected to receive more patents than similar firms that do not use the software. This effect remains after controlling for age and region, suggesting a positive association between software usage and patenting outcomes.</p></li>
-<li><p><strong>Firm Age:</strong> The negative coefficients for both age and age squared indicate an inverted-U relationship. Patent activity tends to increase with firm age up to a point, but then declines as firms become older. This pattern is common in innovation studies, where younger firms are often more dynamic, but very old firms may become less innovative over time.</p></li>
-<li><p><strong>Region:</strong> The region variables do not show strong or consistent effects, implying that, after accounting for other factors, location is not a major driver of patenting success in this sample.</p></li>
-</ul>
+<p>The results from the manual calculation matches those from the built-in GLM function. This agreement provides confidence in the validity of the findings and the reliability of the modeling approach.</p>
 </section>
-</section>
-<section id="comparison-with-built-in-glm" class="level3">
-<h3 class="anchored" data-anchor-id="comparison-with-built-in-glm">Comparison with Built-in GLM</h3>
-<p>The results from the custom maximum likelihood estimation closely match those from the built-in GLM function. This agreement provides confidence in the validity of the findings and the reliability of the modeling approach.</p>
+<section id="interpretation-of-results" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-results">Interpretation of Results</h3>
+<p>The Poisson regression results provide meaningful insights into the factors associated with patenting success among firms. Most notably, firms that use Blueprinty’s software are predicted to file more patents than comparable firms that do not use the software. This relationship remains positive even after controlling for other characteristics such as firm age and regional location, suggesting that Blueprinty’s tools may be effectively supporting innovation efforts. The model also reveals a non-linear relationship between age and patent output: patenting tends to increase as firms age, but eventually declines, consistent with the idea that younger firms may be more dynamic and innovative, while older firms could become less agile over time. I made this assumption as both age and age squared are negative and statistically significant. This pattern suggests an inverted-U relationship. The patenting activity tends to rise as firms age initially, but eventually declines, indicating that older firms may become less innovative over time. Finally, the analysis finds no strong or consistent evidence that region plays a significant role in driving patent activity. Once differences in firm-level factors are accounted for, geographic location does not appear to be a major determinant of patenting success.</p>
 </section>
 <section id="average-treatment-effect-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="average-treatment-effect-analysis">Average Treatment Effect Analysis</h3>
-<div id="f8f03474" class="cell" data-execution_count="9">
+<div id="7d1f044c" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X_0 <span class="op">=</span> X.copy()</span>
@@ -610,19 +598,13 @@ region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>y_pred_1 <span class="op">=</span> poisson_results.predict(X_1)</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>avg_effect <span class="op">=</span> (y_pred_1 <span class="op">-</span> y_pred_0).mean()</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average effect of Blueprinty's software (iscustomer): </span><span class="sc">{</span>avg_effect<span class="sc">:.3f}</span><span class="ss"> additional patents per firm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">round</span>(avg_effect,<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Average effect of Blueprinty's software (iscustomer): 0.793 additional patents per firm</code></pre>
+<pre><code>0.793</code></pre>
 </div>
 </div>
-<p>The analysis suggests that being a customer of Blueprinty’s software has a positive effect on patent success. Using a Poisson regression model, we estimated that firms using Blueprinty’s software are expected to file approximately 0.793 more patents on average compared to similar firms that do not use the software, holding all other firm characteristics constant. This estimate represents the average treatment effect across all firms and was derived by comparing predicted patent counts under hypothetical scenarios where all firms were either customers or non-customers.</p>
-</section>
-<section id="average-treatment-effect-interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="average-treatment-effect-interpretation">Average Treatment Effect Interpretation</h3>
-<p>To assess the practical impact of Blueprinty’s software, we estimated the average treatment effect by comparing predicted patent counts for all firms as if they were customers versus non-customers. The analysis suggests that being a customer of Blueprinty’s software is associated with a meaningful increase in patent success. On average, firms using the software are expected to file nearly one additional patent over five years compared to similar firms that do not use the software, holding all other characteristics constant.</p>
-<p><strong>Business Implication:</strong></p>
-<p>These results support the marketing claim that Blueprinty’s software is linked to greater patenting success. While the analysis cannot prove causality, it provides strong evidence that customers of Blueprinty tend to outperform non-customers in terms of patent output, even after accounting for other important firm characteristics.</p>
+<p>To assess the practical impact of Blueprinty’s software, we estimated the average treatment effect by comparing predicted patent counts for all firms as if they were customers versus non-customers. The analysis suggests that being a customer of Blueprinty’s software has a positive effect on patent success. Using a Poisson regression model, we estimated that firms using Blueprinty’s software are expected to file approximately 0.793 more patents on average compared to similar firms that do not use the software, holding all other firm characteristics constant. These results support the marketing claim that Blueprinty’s software is linked to greater patenting success. This provides strong evidence that customers of Blueprinty tend to outperform non-customers in terms of patent output, even after accounting for other important firm characteristics.</p>
 </section>
 </section>
 <section id="airbnb-case-study" class="level2">
@@ -631,7 +613,7 @@ region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0
 <h3 class="anchored" data-anchor-id="introduction-1">Introduction</h3>
 <p>AirBnB is a popular platform for booking short-term rentals. In March 2017, students Annika Awad, Evan Lebo, and Anna Linden scraped 40,000 Airbnb listings from New York City. The goal of this analysis is to understand what factors influence the number of reviews a listing receives, using Poisson regression, which is well-suited for modeling count data.</p>
 <p>The dataset includes variables such as price, room type, instant bookability, and review scores for cleanliness, location, and value. We begin by loading and inspecting the data to ensure it is suitable for analysis.</p>
-<div id="ea717381" class="cell" data-execution_count="10">
+<div id="446e19ff" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"airbnb.csv"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -661,8 +643,8 @@ region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0
 </section>
 <section id="data-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
-<p>Before fitting our model, we clean the data by removing rows with missing values in key columns, converting categorical variables to numeric (using dummy variables), and ensuring all predictors are numeric. This step is crucial for the validity of our regression analysis.</p>
-<div id="5e1955b3" class="cell" data-execution_count="11">
+<p>Before fitting our model, we clean the data by removing rows with missing values in key columns, converting categorical variables to numeric, and ensuring all predictors are numeric. This step is crucial for the validity of our regression analysis.</p>
+<div id="407b1c65" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"number_of_reviews"</span>])</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>selected_columns <span class="op">=</span> [</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"number_of_reviews"</span>,</span>
@@ -705,10 +687,10 @@ region_Southwest     0.0506      0.047      1.072      0.284      -0.042       0
 </div>
 <p>After cleaning, our modeling dataset contains only numeric columns, with categorical variables such as room type represented as dummy variables. This ensures compatibility with the Poisson regression model.</p>
 </section>
-<section id="maximum-likelihood-estimation-mle-by-hand" class="level3">
-<h3 class="anchored" data-anchor-id="maximum-likelihood-estimation-mle-by-hand">Maximum Likelihood Estimation (MLE) by Hand</h3>
-<p>We first fit a Poisson regression model using maximum likelihood estimation (MLE) “by hand”. This approach allows us to understand the mechanics of model fitting and provides a benchmark for comparison with built-in functions.</p>
-<div id="fadaf87a" class="cell" data-execution_count="12">
+<section id="maximum-likelihood-estimation-by-hand" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood-estimation-by-hand">Maximum Likelihood Estimation by Hand</h3>
+<p>We first fit a Poisson regression model using maximum likelihood estimation manually. This approach allows us to understand the mechanics of model fitting and provides a benchmark for comparison with built-in functions. We reused the neg_log_likelihood function from the previous case.</p>
+<div id="143e5d6f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_model.drop(columns<span class="op">=</span>[<span class="st">"number_of_reviews"</span>]).copy()</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>X.insert(<span class="dv">0</span>, <span class="st">"intercept"</span>, <span class="dv">1</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.values</span>
@@ -745,7 +727,7 @@ Message: CONVERGENCE: REL_REDUCTION_OF_F_&lt;=_FACTR*EPSMCH</code></pre>
 <section id="model-fitting-with-built-in-glm" class="level3">
 <h3 class="anchored" data-anchor-id="model-fitting-with-built-in-glm">Model Fitting with Built-in GLM</h3>
 <p>To validate our custom MLE results, we also fit a Poisson regression model using the built in GLM function.</p>
-<div id="d35b1fef" class="cell" data-execution_count="13">
+<div id="c7f15e19" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for statsmodels</span></span>
@@ -766,7 +748,7 @@ Model Family:                 Poisson   Df Model:                            7
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:            -5.3507e+05
 Date:                Mon, 05 May 2025   Deviance:                   9.4783e+05
-Time:                        22:54:56   Pearson chi2:                 1.42e+06
+Time:                        23:48:45   Pearson chi2:                 1.42e+06
 No. Iterations:                     6   Pseudo R-squ. (CS):             0.5380
 Covariance Type:            nonrobust                                         
 =============================================================================================
@@ -783,28 +765,19 @@ room_type_Shared room        -0.2648      0.009    -30.926      0.000      -0.28
 =============================================================================================</code></pre>
 </div>
 </div>
-<p>The regression summary above provides detailed information about each coefficient. When statistically significant a predictors has a effect on the number of reviews.</p>
+<p>The regression summary above provides the same values as our manual approach improving the confidence that the results are right.</p>
 </section>
 <section id="interpretation-of-results-1" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-of-results-1">Interpretation of Results</h3>
-<p>The regression results provide several important insights for AirBnB hosts and platform managers:</p>
-<p>Instant Bookable: Listings that allow instant booking tend to receive substantially more reviews. This suggests that making it easier for guests to reserve a listing can enhance visibility and guest engagement on the platform.</p>
-<p>Review Scores:</p>
-<p>Higher cleanliness scores are positively associated with the number of reviews, indicating that guests respond favorably to listings perceived as clean and well-maintained.</p>
-<p>In contrast, the model finds that higher scores for location and value are unexpectedly associated with fewer reviews. This may be due to overlap between review categories or other guest behaviors not captured in the model.</p>
-<p>Room Type: Entire homes and apartments generally receive more reviews than private or shared rooms. This likely reflects guest preferences for privacy and exclusive space.</p>
-<p>Price: Although price shows a statistically significant effect, its influence is minimal in practical terms. Within the typical price range, adjusting nightly rates is unlikely to make a noticeable difference in review volume.</p>
-<p>To increase the number of guest reviews, hosts may benefit most from enabling instant booking, offering entire units, and maintaining strong cleanliness ratings. These factors appear to matter more than pricing or even some other review dimensions.</p>
+<p>Listings with instant booking enabled tend to receive more reviews, suggesting that ease of booking increases guest engagement. Cleanliness scores are also positively associated with review volume, highlighting the importance of hygiene. Surprisingly, higher scores for location and value are linked to fewer reviews. This may reflect overlapping review dimensions or unobserved guest behavior. Entire homes and apartments receive more reviews than private or shared rooms, likely due to greater guest preference for privacy. Price has no meaningful impact on review count. Overall, instant booking, cleanliness, and room type are stronger predictors of review volume than pricing or location/value ratings.</p>
 </section>
-<section id="conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
-<p>This analysis demonstrates the application of Poisson regression in two distinct business contexts: patent analysis for Blueprinty and review analysis for AirBnB. In both cases, we successfully modeled count data using Poisson regression, accounting for various covariates and potential confounding factors.</p>
-<p>For Blueprinty, our analysis revealed that firms using their software tend to have higher patent success rates, even after controlling for firm age and regional differences. The Poisson regression model provided valuable insights into the relationship between software usage and patent outcomes, supporting the marketing team’s claims while accounting for important confounding variables.</p>
-<p>In the AirBnB case study, we identified key factors influencing the number of reviews, with instant bookability and room type showing particularly strong effects. The analysis provides actionable insights for hosts looking to increase their listing visibility and engagement.</p>
-<p>Both case studies highlight the importance of proper model specification and the consideration of confounding factors when analyzing count data. The Poisson regression framework proved to be an effective tool for understanding these business problems, providing both statistical rigor and practical insights.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This analysis demonstrates the application of Poisson regression in two distinct business contexts: patent analysis for Blueprinty and review analysis for AirBnB. In both cases, we successfully modeled count data using Poisson regression.</p>
+<p>For Blueprinty, our analysis revealed that firms using their software tend to have higher patent success rates, even after controlling for firm age and regional differences. The Poisson regression model provided valuable insights into the relationship between software usage and patent outcomes, supporting the marketing team’s claims while accounting for important confounding variables. In the AirBnB case study, we identified key factors influencing the number of reviews, with instant bookability and room type showing particularly strong effects. The analysis provides actionable insights for hosts looking to increase their listing visibility and engagement.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
