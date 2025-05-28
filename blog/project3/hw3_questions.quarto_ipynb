@@ -11,7 +11,6 @@
         "---\n",
         "\n",
         "\n",
-        "\n",
         "This assignment expores two methods for estimating the MNL model: (1) via Maximum Likelihood, and (2) via a Bayesian approach using a Metropolis-Hastings MCMC algorithm. \n",
         "\n",
         "\n",
@@ -50,6 +49,7 @@
         "$$ \\ell_n(\\beta) = \\sum_{i=1}^n \\sum_{j=1}^J \\delta_{ij} \\log(\\mathbb{P}_i(j)) $$\n",
         "\n",
         "\n",
+        "\n",
         "## 2. Simulate Conjoint Data\n",
         "\n",
         "We will simulate data from a conjoint experiment about video content streaming services. We elect to simulate 100 respondents, each completing 10 choice tasks, where they choose from three alternatives per task. For simplicity, there is not a \"no choice\" option; each simulated respondent must select one of the 3 alternatives. \n",
@@ -68,7 +68,7 @@
         "\n",
         ":::: {.callout-note collapse=\"true\"}"
       ],
-      "id": "240f26fe"
+      "id": "b05e6457"
     },
     {
       "cell_type": "code",
@@ -132,7 +132,7 @@
         "\n",
         "print(conjoint_data.head())"
       ],
-      "id": "ef9f1724",
+      "id": "f5e51307",
       "execution_count": null,
       "outputs": []
     },
@@ -146,11 +146,9 @@
         "\n",
         "## 3. Preparing the Data for Estimation\n",
         "\n",
-        "The \"hard part\" of the MNL likelihood function is organizing the data, as we need to keep track of 3 dimensions (consumer $i$, covariate $k$, and product $j$) instead of the typical 2 dimensions for cross-sectional regression models (consumer $i$ and covariate $k$). The fact that each task for each respondent has the same number of alternatives (3) helps.  In addition, we need to convert the categorical variables for brand and ads into binary variables.\n",
-        "\n",
-        "_todo: reshape and prep the data_ DONE"
+        "The \"hard part\" of the MNL likelihood function is organizing the data, as we need to keep track of 3 dimensions (consumer $i$, covariate $k$, and product $j$) instead of the typical 2 dimensions for cross-sectional regression models (consumer $i$ and covariate $k$). The fact that each task for each respondent has the same number of alternatives (3) helps.  In addition, we need to convert the categorical variables for brand and ads into binary variables."
       ],
-      "id": "f7a808e8"
+      "id": "75a7b55a"
     },
     {
       "cell_type": "code",
@@ -168,7 +166,7 @@
         "\n",
         "print(conjoint_data.head())"
       ],
-      "id": "5871f6a2",
+      "id": "7c03f2b0",
       "execution_count": null,
       "outputs": []
     },
@@ -178,9 +176,9 @@
       "source": [
         "## 4. Estimation via Maximum Likelihood\n",
         "\n",
-        "We implement the MNL model using maximum likelihood estimation. The log-likelihood function is optimized using the BFGS algorithm to find the parameter estimates and their standard errors.\n"
+        "Following you can see the code for the MNL."
       ],
-      "id": "2fd5d9d3"
+      "id": "57c6c008"
     },
     {
       "cell_type": "code",
@@ -206,7 +204,7 @@
         "task_ids = conjoint_data['resp'].astype(str) + \"_\" + conjoint_data['task'].astype(str)\n",
         "task_ids = task_ids.values"
       ],
-      "id": "c2eeff7f",
+      "id": "0768cd99",
       "execution_count": null,
       "outputs": []
     },
@@ -214,17 +212,17 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "Now we use scipy.optimize to find the MLEs for the Netflix, Prime, Ads and Price parameter.\n"
+        "In the next step we minimize using optimize to get the MLE estimates, standard error and 95% CIs."
       ],
-      "id": "74084f01"
+      "id": "43ee572f"
     },
     {
       "cell_type": "code",
       "metadata": {},
       "source": [
         "from scipy.optimize import minimize\n",
+        "import pandas as pd\n",
         "\n",
-        "# Minimize the log-likelihood\n",
         "result = minimize(\n",
         "    mnl,\n",
         "    x0=np.zeros(4),\n",
@@ -239,16 +237,15 @@
         "\n",
         "results_df = pd.DataFrame({\n",
         "    'Parameter': ['Netflix', 'Prime', 'Ads', 'Price'],\n",
-        "    'MLE Estimate': result.x,\n",
-        "    'Std. Error': error,\n",
-        "    '95% CI Lower': ci_lower,\n",
-        "    '95% CI Upper': ci_upper\n",
+        "    'MLE_Estimate': result.x,\n",
+        "    'Standard_Error': error,\n",
+        "    'CI_Lower': ci_lower,\n",
+        "    'CI_Upper': ci_upper\n",
         "})\n",
         "\n",
-        "print(\"\\nMaximum Likelihood Estimation Results:\")\n",
-        "print(results_df.to_string(index=False))"
+        "print(results_df)"
       ],
-      "id": "39a3f5d3",
+      "id": "17bef9df",
       "execution_count": null,
       "outputs": []
     },
@@ -264,19 +261,15 @@
         "- N(0,1) prior for the price coefficient\n",
         "- Multivariate normal proposal distribution\n"
       ],
-      "id": "cff7944d"
+      "id": "303198c3"
     },
     {
       "cell_type": "code",
       "metadata": {},
       "source": [
-        "#| label: bayesian-estimation\n",
-        "#| code-fold: true\n",
         "import numpy as np\n",
         "\n",
         "def log_prior(beta):\n",
-        "    # beta: array of length 4\n",
-        "    # First 3: N(0, 5^2), Last: N(0, 1^2)\n",
         "    lp = 0\n",
         "    lp += -0.5 * ((beta[0] / 5) ** 2 + np.log(2 * np.pi * 25))\n",
         "    lp += -0.5 * ((beta[1] / 5) ** 2 + np.log(2 * np.pi * 25))\n",
@@ -302,34 +295,21 @@
         "for step in range(n_steps):\n",
         "    beta_proposal = beta_current + np.random.normal(0, proposal_sd)\n",
         "    log_post_proposal = log_posterior(beta_proposal, X, y, task_ids)\n",
-        "    \n",
-        "    log_ratio = log_post_proposal - log_post_current\n",
-        "    \n",
-        "    if np.log(np.random.uniform()) < log_ratio:\n",
+        "\n",
+        "    accept_prob = np.exp(log_post_proposal - log_post_current)\n",
+        "    if np.random.rand() < accept_prob:\n",
         "        beta_current = beta_proposal\n",
         "        log_post_current = log_post_proposal\n",
-        "    \n",
-        "    samples[step] = beta_current\n",
+        "    samples[step, :] = beta_current\n",
         "\n",
-        "posterior_samples = samples[burn_in:]\n",
+        "posterior_samples = samples[burn_in:, :]\n",
         "\n",
-        "posterior_means = np.mean(posterior_samples, axis=0)\n",
-        "posterior_std = np.std(posterior_samples, axis=0)\n",
-        "posterior_ci_lower = np.percentile(posterior_samples, 2.5, axis=0)\n",
-        "posterior_ci_upper = np.percentile(posterior_samples, 97.5, axis=0)\n",
-        "\n",
-        "bayesian_results = pd.DataFrame({\n",
-        "    'Parameter': ['Netflix', 'Prime', 'Ads', 'Price'],\n",
-        "    'Posterior Mean': posterior_means,\n",
-        "    'Posterior Std': posterior_std,\n",
-        "    '95% CI Lower': posterior_ci_lower,\n",
-        "    '95% CI Upper': posterior_ci_upper\n",
-        "})\n",
-        "\n",
-        "print(\"\\nBayesian Estimation Results:\")\n",
-        "print(bayesian_results.to_string(index=False))"
+        "means = posterior_samples.mean(axis=0)\n",
+        "stds = posterior_samples.std(axis=0)\n",
+        "ci_lower = np.percentile(posterior_samples, 2.5, axis=0)\n",
+        "ci_upper = np.percentile(posterior_samples, 97.5, axis=0)"
       ],
-      "id": "bayesian-estimation",
+      "id": "a408eaaa",
       "execution_count": null,
       "outputs": []
     },
@@ -337,9 +317,9 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "Let's compare the results from both estimation methods and discuss their implications for understanding consumer preferences in the streaming service market.\n"
+        "For the Netflix parameter, I visualize both the trace plot and histogram of the posterior distribution. The trace plot helps assess convergence of the MCMC chain by showing how the parameter value evolves over iterations. The histogram shows the shape and spread of the posterior distribution, giving us insight into the uncertainty around our parameter estimate.\n"
       ],
-      "id": "5fd3c93e"
+      "id": "4754190f"
     },
     {
       "cell_type": "code",
@@ -362,7 +342,7 @@
         "plt.tight_layout()\n",
         "plt.show()"
       ],
-      "id": "d493b171",
+      "id": "da63a0da",
       "execution_count": null,
       "outputs": []
     },
@@ -370,16 +350,14 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "The results from both estimation methods provide valuable insights into consumer preferences for streaming services. The parameter estimates indicate:\n"
+        "Looking at the results from both estimation approaches, we can compare the posterior means, standard deviations, and intervals from our Bayesian analysis with the maximum likelihood estimates. "
       ],
-      "id": "6eeff76a"
+      "id": "87ba915b"
     },
     {
       "cell_type": "code",
       "metadata": {},
       "source": [
-        "import pandas as pd\n",
-        "\n",
         "summary_df = pd.DataFrame({\n",
         "    'Parameter': ['Netflix', 'Prime', 'Ads', 'Price'],\n",
         "    'MLE_Estimate': result.x,\n",
@@ -394,7 +372,7 @@
         "\n",
         "print(summary_df)"
       ],
-      "id": "a0aeef15",
+      "id": "9a6bd9eb",
       "execution_count": null,
       "outputs": []
     },
@@ -404,16 +382,27 @@
       "source": [
         "## 6. Discussion\n",
         "\n",
-        "_todo: Suppose you did not simulate the data. What do you observe about the parameter estimates? What does $\\beta_\\text{Netflix} > \\beta_\\text{Prime}$ mean? Does it make sense that $\\beta_\\text{price}$ is negative?_\n",
+        "Looking at the parameter estimates, we can draw several meaningful insights about consumer preferences for streaming services:\n",
         "\n",
-        "To simulate data from a multi-level (random-parameter or hierarchical) model, we would allow each respondent to have their own set of preference parameters, rather than assuming everyone shares the same coefficients. This means, for each respondent, we would draw their individual-level betas from a population distribution (such as a multivariate normal centered at the overall mean). In estimation, we would use hierarchical Bayesian methods or mixed logit models to estimate both the distribution of preferences across the population and the individual-level parameters. This approach captures real-world heterogeneity in preferences and is more realistic for analyzing actual conjoint data.\n",
+        "Brand Preferences:\n",
+        "Consumers generally prefer Netflix and Amazon Prime over Hulu, which serves as the reference brand in this analysis. The positive coefficients for both Netflix and Prime indicate a higher utility associated with these services compared to Hulu. Furthermore, the coefficient for Netflix is larger than that of Prime, suggesting that, all else equal, consumers have a stronger preference for Netflix. This result is consistent with real-world market dynamics, where Netflix has historically maintained a dominant position in the streaming industry.\n",
         "\n",
-        "_todo: At a high level, discuss what change you would need to make in order to simulate data from --- and estimate the parameters of --- a multi-level (aka random-parameter or hierarchical) model. This is the model we use to analyze \"real world\" conjoint data._\n",
+        "Price:\n",
+        "The negative coefficient for price aligns with economic intuition as the monthly subscription price increases, consumer utility and the probability of choosing that option decrease. The magnitude of this coefficient quantifies how sensitive consumers are to price changes. For each one-dollar increase in price, utility decreases by β_price units. Understanding this tradeoff enables streaming services to optimize their pricing strategies by balancing potential revenue gains from higher prices against potential subscriber losses.\n",
         "\n",
-        "To move from a standard multinomial logit model to a multi-level (random-parameter or hierarchical) model, both the simulation and estimation processes need to be adapted to account for individual-level heterogeneity in preferences. In the simulation stage, rather than assigning the same set of part-worth utilities (betas) to every respondent, we would generate a unique set of coefficients for each individual. This is typically done by drawing each respondent’s betas from a population-level distribution, such as a multivariate normal distribution with a specified mean and covariance matrix. Each respondent’s choices would then be simulated using their own set of betas, allowing the simulated data to reflect realistic variation in preferences across individuals.\n",
-        "For estimation, we would use a hierarchical modeling approach, such as hierarchical Bayes or a mixed logit model. In these models, each respondent’s coefficients are treated as random effects, assumed to be drawn from a common population distribution whose parameters are also estimated from the data. The estimation process thus involves recovering both the distribution of preferences in the population and the individual-level coefficients. This is typically achieved using advanced computational methods, such as Markov Chain Monte Carlo (MCMC) for Bayesian estimation or simulated maximum likelihood for mixed logit models. By making these changes, the model can capture the true diversity of preferences found in real-world conjoint data, providing richer and more accurate insights into consumer choice behavior.\n"
+        "Advertisement Impact:\n",
+        "The coefficient for ads is also negative, indicating that consumers generally prefer ad-free experiences. The magnitude of this coefficient suggests that the presence of ads significantly reduces consumer utility, an effect comparable to that of a substantial price increase. This finding underscores the importance of ad-free options in maintaining consumer satisfaction and subscription rates.\n",
+        "\n",
+        "\n",
+        "Simulation Changes \n",
+        "\n",
+        "Instead of assuming that all consumers are the same, the simulation can be made more realistic by allowing each person to have their own unique preferences. Instead of using one set of preferences (like how much people dislike ads or how sensitive they are to price), the model gives each individual their own version of these preferences.\n",
+        "\n",
+        "These personal preferences would be based on general trends seen across all consumers, but with room for variation. This means some people might be more sensitive to price, others might care more about having no ads, and some might have a stronger preference for a particular streaming service.\n",
+        "\n",
+        "By doing this, the simulation can better reflect real-life behavior, where different people value things differently.\n"
       ],
-      "id": "455a51da"
+      "id": "8658182d"
     }
   ],
   "metadata": {
@@ -421,7 +410,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "C:\\Users\\timon\\AppData\\Local\\Programs\\Python\\Python312\\share\\jupyter\\kernels\\python3"
+      "path": "/opt/conda/share/jupyter/kernels/python3"
     }
   },
   "nbformat": 4,
