@@ -321,10 +321,3 @@ Instead of assuming that all consumers are the same, the simulation can be made 
 These personal preferences would be based on general trends seen across all consumers, but with room for variation. This means some people might be more sensitive to price, others might care more about having no ads, and some might have a stronger preference for a particular streaming service.
 
 By doing this, the simulation can better reflect real-life behavior, where different people value things differently.
-
-
-
-
-
-
-
