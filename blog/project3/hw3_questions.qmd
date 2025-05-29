@@ -2,8 +2,6 @@
 title: "Multinomial Logit Model"
 author: "Timon Ortwein"
 date: today
-execute:
-  eval: false
 ---
 
 
@@ -228,8 +226,8 @@ def log_posterior(beta, X, y, task_ids):
     lp = log_prior(beta)
     return ll + lp
 
-n_steps = 1100
-burn_in = 100
+n_steps = 11000
+burn_in = 1000
 np.random.seed(42)
 
 beta_current = np.zeros(4)
