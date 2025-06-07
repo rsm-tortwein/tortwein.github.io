@@ -66,7 +66,7 @@ plot_kmeans(X_scaled, sk_kmeans.labels_, sk_kmeans.cluster_centers_, "sklearn KM
 
 ### Cluster Evaluation
 
-#### Within-Cluster Sum of Squares
+#### Within-Cluster Sum of Squares and Silhouette
 
 Beneath the plots for the elbow method and silhouette analysis can be found. We can see the trend that the higher the number of clusters the lower the appropriate scores.
 ```{python}
@@ -163,7 +163,7 @@ y_test = (x2_test > boundary_test).astype(int)
 X_test = np.column_stack((x1_test, x2_test))
 ```
 
-### Method: Hand-coded KNN Implementation
+### Hand-coded KNN
 KNN classifies each test point by finding the k closest points in the training set and assigning the majority class among those neighbors. Below is our manual implementation:
 
 ```{python}
@@ -195,7 +195,7 @@ y_pred_sklearn = sk_knn.predict(X_test)
 print(f"sklearn KNN accuracy: {(y_pred_sklearn == y_test).mean():.2f}")
 ```
 
-### Model Selection: Varying k
+### Varying k
 We evaluate the classification accuracy for k=1 to k=30 and plot the results to determine the optimal value of k.
 
 ```{python}
