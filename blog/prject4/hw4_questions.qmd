@@ -10,12 +10,11 @@ This analysis explores two machine learning approaches using Python: an unsuperv
 
 # Part 1: K-Means Clustering Analysis
 
-## Methodology
 In this section, we implement our own version of the K-means clustering algorithm using Python. The process begins with the initialization of cluster centroids, followed by the assignment of data points to their nearest centroids. We then recalculate the centroids based on these assignments and repeat this process iteratively until the algorithm converges.
 For our analysis, we use the Palmer Penguins dataset, focusing specifically on two key features: bill length and flipper length.
 
 
-## Implementation Details
+## Implementation
 
 ```{python}
 import numpy as np
@@ -116,18 +115,14 @@ plt.show()
 
 ## Part 2: K Nearest Neighbors Classification
 
-
-### Overview
 In this section, we implement and analyze the K-Nearest Neighbors algorithm. We generate a synthetic dataset with a non-linear decision boundary and compare our hand-coded KNN implementation to scikit-learn's built-in version. We also explore how the choice of the number of neighbors affects classification accuracy.
 The dataset consists of two features, x1 and x2, each uniformly distributed between -3 and 3. The binary outcome variable y is determined by whether x2 is above or below a defined boundary.
 
 
-### Data Generation and Visualization
+### Data Generation
 We first generate the training data and visualize it, coloring points by their class and overlaying the true boundary.
 
 ```{python}
-import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
 
 np.random.seed(42)
