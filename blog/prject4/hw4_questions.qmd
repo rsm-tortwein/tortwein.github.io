@@ -118,7 +118,7 @@ plt.show()
 
 ### Overview
 In this section, we implement and analyze the K-Nearest Neighbors algorithm. We generate a synthetic dataset with a non-linear decision boundary and compare our hand-coded KNN implementation to scikit-learn's built-in version. We also explore how the choice of the number of neighbors affects classification accuracy.
-The dataset consists of two features, `x1` and `x2`, each uniformly distributed between -3 and 3. The binary outcome variable `y` is determined by whether `x2` is above or below a defined boundary.
+The dataset consists of two features, x1 and x2, each uniformly distributed between -3 and 3. The binary outcome variable y is determined by whether x2 is above or below a defined boundary.
 
 
 ### Data Generation and Visualization
@@ -185,7 +185,7 @@ print(f"Manual KNN accuracy: {(y_pred_manual == y_test).mean():.2f}")
 ```
 
 ### Comparison with scikit-learn
-We compare our implementation to scikit-learn's `KNeighborsClassifier` for k=5:
+We compare our implementation to scikit-learn's KNeighborsClassifier for k=5:
 
 ```{python}
 
