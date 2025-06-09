@@ -29,6 +29,7 @@ penguins = sns.load_dataset("penguins")
 X = penguins[['bill_length_mm', 'flipper_length_mm']].dropna().values
 X_scaled = StandardScaler().fit_transform(X)
 
+
 k = 3
 np.random.seed(42)
 indices = np.random.choice(X_scaled.shape[0], k, replace=False)
